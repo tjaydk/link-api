@@ -5,10 +5,10 @@ namespace App\Services\LinkService;
 use App\Models\Link;
 use DOMDocument;
 use DOMNamedNodeMap;
-use HttpException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LinkService
 {
@@ -28,7 +28,7 @@ class LinkService
     public function store(array $validated): Model
     {
         $response = Http::get($validated['url']);
-        if ($response->status() != 200) { throw new HttpException('url responded with error'); }
+        if ($response->status() != 200) { throw new HttpException(404,'no response from url'); }
 
         $title = '';
         $description = '';
