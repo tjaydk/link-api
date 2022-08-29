@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\LinkController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,12 @@ Route::middleware('public')->group(function () {
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('password.email');
     Route::get('reset/{token}', [AuthController::class, 'resetPassword'])->name('password.reset');
     Route::post('reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
+
+    /**
+     * LINK ENDPOINTS
+     * =================================
+     */
+    Route::get('link', [LinkController::class, 'publicIndex']);
 
     /**
      * GOOGLE ENDPOINTS

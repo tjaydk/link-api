@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
 
     /**
-     * AUCTION ENDPOINTS
+     * LINK ENDPOINTS
      * =================================
      */
     Route::resource('link', LinkController::class);

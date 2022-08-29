@@ -16,6 +16,11 @@ class LinkController extends Controller
         //
     }
 
+    public function publicIndex(): Collection
+    {
+        return $this->linkService->index();
+    }
+
     public function index(): Collection
     {
         return $this->linkService->index();
