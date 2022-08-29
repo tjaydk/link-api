@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GoogleImageDetectionRequest extends FormRequest
+class StoreLinkRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class GoogleImageDetectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'file:image|required'
+            'url' => 'required|url',
         ];
     }
 }

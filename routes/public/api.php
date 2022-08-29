@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\UserController;
@@ -27,8 +26,11 @@ Route::middleware('public')->group(function () {
     Route::get('reset/{token}', [AuthController::class, 'resetPassword'])->name('password.reset');
     Route::post('reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
 
+    /**
+     * GOOGLE ENDPOINTS
+     * =================================
+     */
     Route::post('translate', [GoogleController::class, 'translate'])->name('google.translate');
-    Route::post('detect', [GoogleController::class, 'imageDetection'])->name('google.image.detection');
 
     /**
      * VERIFICATION ENDPOINTS

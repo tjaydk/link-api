@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\LinkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,19 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
      * AUCTION ENDPOINTS
      * =================================
      */
-    Route::resource('auction', AuctionController::class);
-    Route::prefix('auction')->group(function () {
-        Route::post('', [AuctionController::class, 'index'])->name('auction.index');
-        Route::post('image', [AuctionController::class, 'indexFromImage'])->name('auction.image');
-    });
-
-    /**
-     * DEEP LEARNING ENDPOINTS
-     * =================================
-     */
-    Route::prefix('image')->group(function () {
-        Route::post('label', [GoogleController::class, 'labelDetectionFromImage']);
-    });
+    Route::resource('link', LinkController::class);
 
     /**
      * Authentication endpoints
