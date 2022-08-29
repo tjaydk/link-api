@@ -12,11 +12,17 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LinkService
 {
+    /**
+     * @param LinkAccessor $linkAccessor
+     */
     public function __construct(private LinkAccessor $linkAccessor)
     {
         //
     }
 
+    /**
+     * @return Collection
+     */
     public function index(): Collection
     {
         return $this->linkAccessor->index();
@@ -27,9 +33,7 @@ class LinkService
      */
     public function store(array $validated): Model
     {
-        $response = Http::withHeaders([
-
-        ])->get($validated['url']);
+        $response = Http::get($validated['url']);
         if ($response->status() != 200) { throw new HttpException(404,'no response from url'); }
 
         $title = '';
@@ -66,6 +70,12 @@ class LinkService
         ]);
     }
 
+    /**
+     * @param DOMNamedNodeMap $attributes
+     * @param string $value
+     * @param bool $validUrl
+     * @return string|null
+     */
     private function extractDataFromDOMAttributes(DOMNamedNodeMap $attributes, string $value, bool $validUrl = false): ?string
     {
         foreach ($attributes as $attribute) {
@@ -80,11 +90,18 @@ class LinkService
         return null;
     }
 
+    /**
+     * @param string $url
+     * @return mixed
+     */
     private function validateUrl(string $url)
     {
         return filter_var($url, FILTER_VALIDATE_URL);
     }
 
+    /**
+     * @param int $linkId
+     */
     public function destroy(int $linkId)
     {
         $this->linkAccessor->destroy($linkId);
