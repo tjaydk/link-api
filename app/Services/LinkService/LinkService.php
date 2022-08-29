@@ -37,8 +37,8 @@ class LinkService
         if ($response->status() != 200) { throw new HttpException(404,'no response from url'); }
 
         $title = '';
-        $description = '';
-        $imageUrl = '';
+        $description = null;
+        $imageUrl = null;
 
         $body = $response->body();
 
@@ -53,10 +53,10 @@ class LinkService
         // Get description and image tags
         foreach ($DOM->getElementsByTagName('meta') as $item) {
             foreach ($item->attributes as $attribute) {
-                if (str_contains($attribute->value, 'description')) {
+                if (str_contains($attribute->value, 'description') && !isset($description)) {
                     $description = $this->extractDataFromDOMAttributes($item->attributes, 'description');
                 }
-                if (str_contains($attribute->value, 'image')) {
+                if (str_contains($attribute->value, 'image') && !isset($imageUrl)) {
                     $imageUrl = $this->extractDataFromDOMAttributes($item->attributes, 'image', true);
                 }
             }
