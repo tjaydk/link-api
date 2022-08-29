@@ -27,7 +27,9 @@ class LinkService
      */
     public function store(array $validated): Model
     {
-        $response = Http::get($validated['url']);
+        $response = Http::withHeaders([
+
+        ])->get($validated['url']);
         if ($response->status() != 200) { throw new HttpException(404,'no response from url'); }
 
         $title = '';
