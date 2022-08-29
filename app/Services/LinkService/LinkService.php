@@ -2,6 +2,8 @@
 
 namespace App\Services\LinkService;
 
+use App\Models\Link;
+use DOMDocument;
 use DOMNamedNodeMap;
 use HttpException;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,7 +36,7 @@ class LinkService
 
         $body = $response->body();
 
-        $DOM = new \DOMDocument();
+        $DOM = new DOMDocument();
         $DOM->loadHTML($body, LIBXML_NOERROR);
 
         // Get title
@@ -49,7 +51,7 @@ class LinkService
                     $description = $this->extractDataFromDOMAttributes($item->attributes, 'description');
                 }
                 if (str_contains($attribute->value, 'image')) {
-                    $imageUrl = $this->extractDataFromDOMAttributes($item->attributes, 'image');;
+                    $imageUrl = $this->extractDataFromDOMAttributes($item->attributes, 'image', true);
                 }
             }
         }
@@ -62,13 +64,27 @@ class LinkService
         ]);
     }
 
-    private function extractDataFromDOMAttributes(DOMNamedNodeMap $attributes, string $value): ?string
+    private function extractDataFromDOMAttributes(DOMNamedNodeMap $attributes, string $value, bool $validUrl = false): ?string
     {
         foreach ($attributes as $attribute) {
             if (!str_contains($attribute->value, $value)) {
-                return $attribute->value;
+                if (!$validUrl) {
+                    return $attribute->value;
+                } else if ($this->validateUrl($attribute->value)) {
+                    return $attribute->value;
+                }
             }
         }
         return null;
+    }
+
+    private function validateUrl(string $url)
+    {
+        return filter_var($url, FILTER_VALIDATE_URL);
+    }
+
+    public function destroy(int $linkId)
+    {
+        $this->linkAccessor->destroy($linkId);
     }
 }

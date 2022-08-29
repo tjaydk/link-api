@@ -18,8 +18,8 @@ class LinkAccessor
         return Link::create($validated);
     }
 
-    public function delete(Link $link): void
+    public function destroy(int $linkId): void
     {
-        $link->delete();
+        Link::find($linkId)->delete();
     }
 }
