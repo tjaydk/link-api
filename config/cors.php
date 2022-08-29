@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000', 'https://auktionsarkivet.dk', 'https://www.auktionsarkivet.dk'],
+    'allowed_origins' => ['http://localhost:3000', 'https://lykkeridderneskamp.dk', 'https://www.lykkeridderneskamp.dk'],
 
     'allowed_origins_patterns' => ['*'],
 
